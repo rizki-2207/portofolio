@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8">
       <div className="max-w-2xl w-full bg-white shadow-xl rounded-2xl p-10 text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">Halo, Saya Developer!</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">Halo, Selamat Datang Di Portofolio Saya!</h1>
         <p className="text-lg text-gray-600 mb-8">
           Saya membangun aplikasi web modern menggunakan Next.js dan JavaScript.
         </p>
