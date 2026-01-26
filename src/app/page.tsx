@@ -69,7 +69,7 @@ export default function Home() {
       {/* --- HERO SECTION --- */}
       <section id="about" className="pt-40 pb-20 px-6">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
-          <div className="w-48 h-48 rounded-3xl overflow-hidden border-2 border-gray-800 shadow-2xl flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-500">
+          <div className="w-48 h-48 rounded-3xl overflow-hidden border-2 border-gray-800 shadow-2xl flex-shrink-0 transition-transform duration-500 hover:scale-105">
             <img src="/profil.jpg" alt="Rizki Ananda" className="bg-gray-900" />
           </div>
           <div className="text-left">
