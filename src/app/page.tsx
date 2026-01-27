@@ -19,7 +19,7 @@ export default function Home() {
       title: "Ijazah S1 Pendidikan Teknologi Informasi",
       issuer: "UIN Ar-Raniry Banda Aceh",
       year: "2025",
-      description: "Bukti kelulusan akademik dengan fokus pada pemrograman dan teknologi informasi.",
+      description: "Bukti kelulusan akademik dengan fokus pada pendidikan dan teknologi informasi.",
       link: "/ijazah-s1-rizki.pdf" // Simpan file ijazah di folder public
     },
     {
