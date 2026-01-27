@@ -16,22 +16,32 @@ export default function Home() {
 
   const certificates = [
     {
-      title: "Web Developer",
-      issuer: "BPVP Banda Aceh",
+      title: "Ijazah S1 Pendidikan Teknologi Informasi",
+      issuer: "UIN Ar-Raniry Banda Aceh",
       year: "2025",
-      description: "Pelatihan intensif pengembangan aplikasi web berbasis industri.",
+      description: "Bukti kelulusan akademik dengan fokus pada pemrograman dan teknologi informasi.",
+      link: "/ijazah-s1-rizki.pdf" // Simpan file ijazah di folder public
     },
     {
-      title: "S1 Pendidikan Teknologi Informasi",
-      issuer: "UIN Ar-Raniry",
-      year: "2025",
-      description: "Gelar sarjana dengan fokus pada teknologi instruksional dan pemrograman.",
+      title: "Junior Web Developer",
+      issuer: "BPVP Banda Aceh / Sertifikasi Kompetensi",
+      year: "2023",
+      description: "Pelatihan dasar pengembangan web, algoritma, dan struktur data.",
+      link: "/sertifikat-jwd-2023.pdf" // Ganti sesuai nama file Anda di folder public
     },
     {
-      title: "Javascript Modern",
-      issuer: "Dicoding / Coursera",
-      year: "2024",
-      description: "Pemahaman mendalam tentang ES6+, Asynchronous, dan DOM.",
+      title: "Pengembangan Web (Node.js & React)",
+      issuer: "BPVP Banda Aceh / Sertifikasi Kompetensi",
+      year: "2025",
+      description: "Pelatihan intensif membangun aplikasi fullstack modern menggunakan ekosistem JavaScript.",
+      link: "/sertifikat-pengembangan-web-2025.pdf" // Ganti sesuai nama file Anda di folder public
+    },
+    {
+      title: "Sertifikat Magang",
+      issuer: "Hotel Fhandika Boutique.Inc",
+      year: "2025",
+      description: "Penghargaan atas kontribusi pengembangan sistem informasi internal hotel selama masa magang.",
+      link: "/sertifikat-magang-fhandika.pdf" // Ganti sesuai nama file Anda di folder public
     }
   ];
 
@@ -170,21 +180,37 @@ export default function Home() {
       <section id="certificates" className="py-24 bg-gray-900/30 px-6 border-t border-gray-900">
         <div className="max-w-6xl mx-auto text-left">
           <h2 className="text-3xl font-bold text-white mb-12 flex items-center gap-3">
-            <Award className="text-blue-500 w-8 h-8" /> Sertifikasi
+            <Award className="text-blue-500 w-8 h-8" /> Sertifikasi & Pengalaman
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {certificates.map((cert, i) => (
-              <div key={i} className="group bg-gray-900 border border-gray-800 p-8 rounded-3xl hover:border-blue-500/50 transition-all duration-300">
+              <a 
+                key={i} 
+                href={cert.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group bg-gray-900 border border-gray-800 p-8 rounded-3xl hover:border-blue-500/50 hover:bg-gray-900/80 transition-all duration-300 block relative overflow-hidden"
+              >
+                {/* Ikon panah kecil saat hover */}
+                <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ExternalLink className="w-4 h-4 text-blue-500" />
+                </div>
+
                 <div className="flex justify-between items-start mb-6 text-left">
                   <div className="p-3 bg-gray-800 rounded-2xl group-hover:bg-blue-600 transition-colors">
                     <FileText className="w-6 h-6 text-blue-400 group-hover:text-white" />
                   </div>
                   <span className="text-xs font-mono text-gray-500">{cert.year}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
+                
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition">{cert.title}</h3>
                 <p className="text-blue-500 text-sm font-medium mb-4">{cert.issuer}</p>
-                <p className="text-gray-500 text-sm mb-6 leading-relaxed">{cert.description}</p>
-              </div>
+                <p className="text-gray-500 text-sm leading-relaxed">{cert.description}</p>
+                
+                <div className="mt-6 text-xs font-bold text-blue-500/50 group-hover:text-blue-500 transition uppercase tracking-widest">
+                  Klik untuk melihat
+                </div>
+              </a>
             ))}
           </div>
         </div>
