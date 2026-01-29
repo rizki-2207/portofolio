@@ -4,7 +4,7 @@ import Typewriter from 'typewriter-effect';
 import Image from 'next/image';
 import { 
   Code2, Database, Layout, Terminal, Cpu, Award, 
-  Briefcase, FileText, GraduationCap, Mail, Instagram, MapPin, Phone, ExternalLink, ArrowUp
+  Briefcase, FileText, GraduationCap, Mail, Instagram, MapPin, Phone, ExternalLink, ArrowUp, Menu, X
 } from "lucide-react";
 import { useState, useEffect } from 'react';
 
@@ -17,6 +17,7 @@ export default function Home() {
   ];
 
   const [isVisible, setIsVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   useEffect(() => {
     // Memaksa halaman kembali ke atas saat refresh
@@ -85,47 +86,79 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 font-sans scroll-smooth">
       {/* --- NAVBAR --- */}
-      <nav className="fixed top-0 w-full bg-gray-950/80 backdrop-blur-md border-b border-gray-800 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tighter text-blue-500 hover:text-blue-400 transition-colors cursor-default">
-            RIZKI<span className="text-white">.DEV</span>
-          </span>   
+<nav className="fixed top-0 w-full bg-gray-950/80 backdrop-blur-md border-b border-gray-800 z-50">
+  <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <span className="font-bold text-xl tracking-tighter text-blue-500 hover:text-blue-400 transition-colors cursor-default">
+      RIZKI<span className="text-white">.DEV</span>
+    </span>
+    
+    {/* Tombol Hamburger Mobile */}
+    <button 
+      className="md:hidden text-gray-400 hover:text-white transition-colors"
+      onClick={() => setIsMenuOpen(!isMenuOpen)}
+    >
+      {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+    </button>
 
-          <div className="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
-            {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
-              <a 
-                key={item}
-                href={`#${item}`} 
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="hover:text-blue-400 transition-colors capitalize relative group"
-              >
-                {item === 'about' ? 'Tentang' : 
-                item === 'skills' ? 'Keahlian' : 
-                item === 'education' ? 'Pendidikan' : 
-                item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
-              </a>
-            ))}
-          </div>
+    {/* Menu Navigasi Desktop */}
+    <div className="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+      {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
+        <a 
+          key={item}
+          href={`#${item}`} 
+          onClick={(e) => handleSmoothScroll(e, item)}
+          className="hover:text-blue-400 transition-colors capitalize relative group"
+        >
+          {item === 'about' ? 'Tentang' : 
+           item === 'skills' ? 'Keahlian' : 
+           item === 'education' ? 'Pendidikan' : 
+           item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+        </a>
+      ))}
+    </div>
 
-          <div className="flex items-center gap-4">
-            {/* MENU CV */}
-            <a 
-              href="/cv-rizki.pdf" // Pastikan file CV Anda ada di folder 'public' dengan nama ini
-              target="_blank" 
-              className="flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-blue-400 transition"
-            >
-              <FileText className="w-4 h-4" /> CV
-            </a>
-            <a href="mailto:Rizkiananda2207@gmail.com" className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition shadow-lg shadow-blue-900/20">
-              Kontak
-            </a>
-          </div>
-        </div>
-      </nav>
+    {/* Tombol Kontak Desktop */}
+    <div className="hidden md:flex items-center gap-4">
+      <a href="/cv-rizki.pdf" target="_blank" className="flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-blue-400 transition">
+        <FileText className="w-4 h-4" /> CV
+      </a>
+      <a href="mailto:Rizkiananda2207@gmail.com" className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition shadow-lg shadow-blue-900/20">
+        Kontak
+      </a>
+    </div>
+  </div>
+
+  {/* Menu Navigasi Mobile (Dropdown) */}
+  {isMenuOpen && (
+    <div className="md:hidden bg-gray-950 border-b border-gray-800 px-6 py-6 flex flex-col gap-5 animate-in fade-in slide-in-from-top-5 duration-300">
+      {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
+        <a 
+          key={item}
+          href={`#${item}`} 
+          onClick={(e) => {
+            handleSmoothScroll(e, item);
+            setIsMenuOpen(false); // Tutup menu setelah klik
+          }}
+          className="text-gray-400 hover:text-blue-400 text-lg font-medium transition-colors"
+        >
+          {item === 'about' ? 'Tentang' : 
+           item === 'skills' ? 'Keahlian' : 
+           item === 'education' ? 'Pendidikan' : 
+           item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
+        </a>
+      ))}
+      <div className="flex flex-col gap-4 pt-6 border-t border-gray-800">
+        <a href="/cv-rizki.pdf" className="text-gray-400 flex items-center gap-2 text-sm">
+          <FileText className="w-4 h-4"/> Lihat CV (PDF)
+        </a>
+        <a href="mailto:Rizkiananda2207@gmail.com" className="text-blue-500 text-sm font-bold uppercase tracking-widest">
+          Hubungi Saya
+        </a>
+      </div>
+    </div>
+  )}
+</nav>
 
       {/* --- HERO SECTION --- */}
       <section id="about" className="pt-40 pb-20 px-6">
@@ -137,6 +170,7 @@ export default function Home() {
               fill
               className="object-cover bg-gray-900"
               priority
+              sizes="(max-width: 768px) 192px, 192px"
             />
           </div>
           <div className="text-left">
