@@ -1,18 +1,55 @@
 "use client";
 
 import Typewriter from 'typewriter-effect';
+import Image from 'next/image';
 import { 
   Code2, Database, Layout, Terminal, Cpu, Award, 
-  Briefcase, FileText, GraduationCap, Mail, Instagram, MapPin, Phone, ExternalLink 
+  Briefcase, FileText, GraduationCap, Mail, Instagram, MapPin, Phone, ExternalLink, ArrowUp
 } from "lucide-react";
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   const skills = [
-    { name: "Frontend", icon: <Layout className="w-5 h-5" />, tech: "React, HTML, CSS, Tailwind/Bootstrap" },
-    { name: "Backend", icon: <Terminal className="w-5 h-5" />, tech: "Node.js, PHP, JavaScript" },
-    { name: "Database", icon: <Database className="w-5 h-5" />, tech: "MySQL, XAMPP" },
-    { name: "Tools", icon: <Cpu className="w-5 h-5" />, tech: "VS Code, Git, Vercel" },
+  { name: "Frontend", icon: <Layout className="w-5 h-5" />, tech: "React, Next.js, Tailwind" },
+  { name: "Backend", icon: <Terminal className="w-5 h-5" />, tech: "Node.js, PHP, JavaScript" },
+  { name: "Database", icon: <Database className="w-5 h-5" />, tech: "MySQL, XAMPP" },
+  { name: "Development", icon: <Code2 className="w-5 h-5" />, tech: "TypeScript, Git, Vercel" },
   ];
+
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Memaksa halaman kembali ke atas saat refresh
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    // Logika untuk mendeteksi posisi gulir
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const certificates = [
     {
@@ -50,18 +87,32 @@ export default function Home() {
       {/* --- NAVBAR --- */}
       <nav className="fixed top-0 w-full bg-gray-950/80 backdrop-blur-md border-b border-gray-800 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tighter text-blue-500 underline decoration-blue-500/20">RIZKI.DEV</span>
-          
+          <span className="font-bold text-xl tracking-tighter text-blue-500 hover:text-blue-400 transition-colors cursor-default">
+            RIZKI<span className="text-white">.DEV</span>
+          </span>   
+
           <div className="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
-            <a href="#about" className="hover:text-white transition">Tentang</a>
-            <a href="#skills" className="hover:text-white transition">Keahlian</a>
-            <a href="#education" className="hover:text-white transition">Pendidikan</a>
-            <a href="#experience" className="hover:text-white transition">Pengalaman</a>
-            <a href="#certificates" className="hover:text-white transition">Sertifikat</a>
+            {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
+              <a 
+                key={item}
+                href={`#${item}`} 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hover:text-blue-400 transition-colors capitalize relative group"
+              >
+                {item === 'about' ? 'Tentang' : 
+                item === 'skills' ? 'Keahlian' : 
+                item === 'education' ? 'Pendidikan' : 
+                item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+              </a>
+            ))}
           </div>
 
           <div className="flex items-center gap-4">
-            {/* MENU CV DIKEMBALIKAN */}
+            {/* MENU CV */}
             <a 
               href="/cv-rizki.pdf" // Pastikan file CV Anda ada di folder 'public' dengan nama ini
               target="_blank" 
@@ -79,8 +130,14 @@ export default function Home() {
       {/* --- HERO SECTION --- */}
       <section id="about" className="pt-40 pb-20 px-6">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
-          <div className="w-48 h-48 rounded-3xl overflow-hidden border-2 border-gray-800 shadow-2xl flex-shrink-0 transition-transform duration-500 hover:scale-105">
-            <img src="/profil.jpg" alt="Rizki Ananda" className="bg-gray-900" />
+          <div className="w-48 h-48 rounded-3xl overflow-hidden border-2 border-gray-800 shadow-2xl flex-shrink-0 transition-transform duration-500 hover:scale-105 relative">
+            <Image 
+              src="/profil.jpg" 
+              alt="Rizki Ananda" 
+              fill
+              className="object-cover bg-gray-900"
+              priority
+            />
           </div>
           <div className="text-left">
             <h1 className="text-6xl font-extrabold mb-3 tracking-tight bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
@@ -103,10 +160,18 @@ export default function Home() {
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-xs text-gray-500 uppercase tracking-widest">
-              <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-blue-500" /> Blang Oi, Banda Aceh</span>
-              <span className="flex items-center gap-2"><Mail className="w-4 h-4 text-blue-500" /> Rizkiananda2207@gmail.com</span>
-              <span className="flex items-center gap-2"><Phone className="w-4 h-4 text-blue-500" /> 0823 6939 2577</span>
-              <span className="flex items-center gap-2"><Instagram className="w-4 h-4 text-blue-500" /> @rizki_0700</span>
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-blue-500" /> Blang Oi, Banda Aceh
+              </span>
+              <a href="mailto:Rizkiananda2207@gmail.com" className="flex items-center gap-2 hover:text-blue-400 transition">
+                <Mail className="w-4 h-4 text-blue-500" /> Rizkiananda2207@gmail.com
+              </a>
+              <a href="tel:+6282369392577" className="flex items-center gap-2 hover:text-blue-400 transition">
+                <Phone className="w-4 h-4 text-blue-500" /> 0823 6939 2577
+              </a>
+              <a href="https://instagram.com/rizki_0700" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-blue-400 transition">
+                <Instagram className="w-4 h-4 text-blue-500" /> @rizki_0700
+              </a>
             </div>
           </div>
         </div>
@@ -221,6 +286,16 @@ export default function Home() {
         <p className="mb-2 uppercase tracking-[0.3em] font-light">Rizki Ananda • Banda Aceh • Indonesia</p>
         <p className="opacity-50">© 2026 Developed with Next.js 15 & Tailwind</p>
       </footer>
+    
+      {/* --- BACK TO TOP BUTTON --- */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-8 right-8 p-4 bg-blue-600 text-white rounded-2xl shadow-2xl transition-all duration-300 z-50 hover:bg-blue-500 hover:-translate-y-2 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+        }`}
+      >
+        <ArrowUp className="w-6 h-6" />
+      </button>
     </div>
   );
 }
