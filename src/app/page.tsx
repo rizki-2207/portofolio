@@ -10,20 +10,34 @@ import {
 import { useState, useEffect } from 'react';
 import { useTheme } from "next-themes";
 
+type Skill = {
+  name: string;
+  icon: React.ReactNode;
+  tech: string;
+};
+
+type Certificate = {
+  title: string;
+  issuer: string;
+  year: string;
+  description: string;
+  link: string;
+};
+
 export default function Home() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const skills = [
-    { name: "Frontend", icon: <Layout className="w-5 h-5" />, tech: "React, Next.js, Tailwind" },
+  const skills: Skill[] = [
+    { name: "Frontend", icon: <Layout className="w-5 h-5" />, tech: "React, Next.js, Tailwind CSS" },
     { name: "Backend", icon: <Terminal className="w-5 h-5" />, tech: "Node.js, PHP, JavaScript" },
     { name: "Database", icon: <Database className="w-5 h-5" />, tech: "MySQL, XAMPP" },
     { name: "Development", icon: <Code2 className="w-5 h-5" />, tech: "TypeScript, Git, Vercel" },
   ];
 
-  const certificates = [
+  const certificates: Certificate[] = [
     {
       title: "Ijazah S1 Pendidikan Teknologi Informasi",
       issuer: "UIN Ar-Raniry Banda Aceh",
@@ -51,6 +65,28 @@ export default function Home() {
       year: "2025",
       description: "Penghargaan atas kontribusi pengembangan sistem informasi internal hotel selama masa magang.",
       link: "/sertifikat-magang-fhandika.pdf"
+    }
+  ];
+
+  const experiences = [
+    {
+      role: "Fullstack Developer",
+      company: "Hotel Fhandika Boutique.Inc",
+      location: "Banda Aceh",
+      period: "2025",
+      description: [
+        "Mengembangkan situs web secara fullstack menggunakan lingkungan ekosistem Node.js dan React.",
+        "Melakukan manajemen basis data MySQL (XAMPP) untuk integrasi dan pengelolaan data aplikasi internal hotel."
+      ]
+    }
+  ];
+
+  const projects = [
+    {
+      title: "Website Portofolio Pribadi",
+      techStack: "Next.js, Tailwind CSS, TypeScript",
+      description: "Merancang dan mengembangkan situs web portofolio pribadi yang responsif dengan fitur dark mode. Proyek ini di-deploy menggunakan Vercel dan dioptimalkan kinerjanya menggunakan Vercel Speed Insights.",
+      link: "https://rizkiananda.my.id"
     }
   ];
 
@@ -131,8 +167,8 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center gap-4 ml-4">
-              <a href="/cv-rizki.pdf" target="_blank" className="flex items-center gap-2 text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-500 transition">
-                <FileText className="w-4 h-4" /> CV
+              <a href="/cv-rizki.pdf" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <FileText className="w-4 h-4" /> Lihat CV
               </a>
               <a href="mailto:Rizkiananda2207@gmail.com" className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition shadow-lg shadow-blue-900/20">
                 Kontak
@@ -142,34 +178,36 @@ export default function Home() {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-6 flex flex-col gap-5 animate-in fade-in slide-in-from-top-5 duration-300">
-            {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
-              <a 
-                key={item}
-                href={`#${item}`} 
-                onClick={(e) => {
-                  handleSmoothScroll(e, item);
-                  setIsMenuOpen(false);
-                }}
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-500 text-lg font-medium transition-colors"
-              >
-                {item === 'about' ? 'Tentang' : 
-                 item === 'skills' ? 'Keahlian' : 
-                 item === 'education' ? 'Pendidikan' : 
-                 item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
-              </a>
-            ))}
-            <div className="flex flex-col gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
-              <a href="/cv-rizki.pdf" className="text-gray-500 dark:text-gray-400 flex items-center gap-2 text-sm">
-                <FileText className="w-4 h-4"/> Lihat CV (PDF)
-              </a>
-              <a href="mailto:Rizkiananda2207@gmail.com" className="text-blue-600 dark:text-blue-500 text-sm font-bold uppercase tracking-widest">
-                Hubungi Saya
-              </a>
-            </div>
+        <div 
+          className={`md:hidden bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 flex flex-col gap-5 overflow-hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? "max-h-[500px] px-6 py-6 border-b opacity-100" : "max-h-0 px-6 py-0 opacity-0 pointer-events-none"
+          }`}
+        >
+          {['about', 'skills', 'education', 'experience', 'certificates'].map((item) => (
+            <a 
+              key={item}
+              href={`#${item}`} 
+              onClick={(e) => {
+                handleSmoothScroll(e, item);
+                setIsMenuOpen(false);
+              }}
+              className="text-gray-600 dark:text-gray-400 hover:text-blue-500 text-lg font-medium transition-colors"
+            >
+              {item === 'about' ? 'Tentang' : 
+               item === 'skills' ? 'Keahlian' : 
+               item === 'education' ? 'Pendidikan' : 
+               item === 'experience' ? 'Pengalaman' : 'Sertifikat'}
+            </a>
+          ))}
+          <div className="flex flex-col gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
+            <a href="/cv-rizki.pdf" className="text-gray-500 dark:text-gray-400 flex items-center gap-2 text-sm">
+              <FileText className="w-4 h-4"/> Lihat CV (PDF)
+            </a>
+            <a href="mailto:Rizkiananda2207@gmail.com" className="text-blue-600 dark:text-blue-500 text-sm font-bold uppercase tracking-widest">
+              Hubungi Saya
+            </a>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* --- HERO SECTION --- */}
@@ -200,9 +238,8 @@ export default function Home() {
               />
             </div>
 
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
-              Lulusan S1 Pendidikan Teknologi Informasi yang ahli dalam membangun solusi digital fungsional. 
-              Mampu bekerja secara disiplin, teliti, dan tekun baik secara mandiri maupun tim.
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl text-left md:text-justify">
+              Halo, saya Rizki Ananda. Saya adalah seorang Fullstack Developer yang antusias dalam membangun solusi web digital yang fungsional dan modern. Saya terbiasa menggunakan ekosistem JavaScript seperti React dan Node.js, serta mampu bekerja secara disiplin dan teliti, baik secara mandiri maupun dalam tim.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-xs text-gray-500 dark:text-gray-500 uppercase tracking-widest">
@@ -259,31 +296,73 @@ export default function Home() {
         </div>
       </section>
 
+      {/* --- PORTOFOLIO / PROJECTS SECTION ---
+      <section id="portofolio" className="py-24 px-6 border-t border-gray-100 dark:border-gray-900 bg-white dark:bg-gray-950 text-left">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold mb-12 flex items-center gap-3 text-gray-900 dark:text-white">
+            <Code2 className="text-blue-600 dark:text-blue-500" /> Proyek Portofolio
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {projects.map((project, i) => (
+              <a 
+                key={i}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col justify-between bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 p-8 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-colors shadow-sm"
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                  </div>
+                  <p className="text-xs font-mono text-blue-600 dark:text-blue-500 mb-4 uppercase tracking-wider">
+                    {project.techStack}
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
       {/* --- EXPERIENCE SECTION --- */}
       <section id="experience" className="py-24 px-6 border-t border-gray-100 dark:border-gray-900 bg-gray-50 dark:bg-gray-950">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold mb-12 flex items-center gap-3 text-gray-900 dark:text-white">
             <Briefcase className="text-blue-600 dark:text-blue-500" /> Pengalaman Profesional
           </h2>
-          <div className="bg-white dark:bg-gray-900 p-10 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <div className="flex flex-col md:flex-row justify-between mb-8 gap-4">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-white italic">Fullstack Developer</h3>
-                <p className="text-blue-600 dark:text-blue-400 font-medium">Hotel Fhandika Boutique.Inc (2025)</p>
+          
+          <div className="space-y-6">
+            {experiences.map((exp, i) => (
+              <div key={i} className="bg-white dark:bg-gray-900 p-10 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div className="flex flex-col md:flex-row justify-between mb-8 gap-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white italic">{exp.role}</h3>
+                    <p className="text-blue-600 dark:text-blue-400 font-medium">{exp.company} ({exp.period})</p>
+                  </div>
+                  <span className="text-gray-500 font-mono text-sm bg-gray-100 dark:bg-gray-800 px-4 py-1 rounded-full self-start">
+                    {exp.location}
+                  </span>
+                </div>
+                <ul className="space-y-4 text-gray-600 dark:text-gray-400 text-sm">
+                  {exp.description.map((desc, j) => (
+                    <li key={j} className="flex gap-3 text-left">
+                      <span className="text-blue-600 dark:text-blue-500 font-bold mt-0.5">»</span>
+                      <span>{desc}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <span className="text-gray-500 font-mono text-sm bg-gray-100 dark:bg-gray-800 px-4 py-1 rounded-full self-start">Banda Aceh</span>
-            </div>
-            <ul className="space-y-4 text-gray-600 dark:text-gray-400 text-sm">
-              <li className="flex gap-3">
-                <span className="text-blue-600 dark:text-blue-500 font-bold">»</span>
-                <span>Fullstack development website menggunakan Node.js dan React.</span>
-              </li>
-              <li className="flex gap-3 text-left">
-                <span className="text-blue-600 dark:text-blue-500 font-bold">»</span>
-                <span>Manajemen database MySQL (XAMPP) untuk integrasi data aplikasi hotel.</span>
-              </li>
-            </ul>
+            ))}
           </div>
+
         </div>
       </section>
 
@@ -329,7 +408,7 @@ export default function Home() {
       {/* --- FOOTER --- */}
       <footer className="py-16 text-center text-gray-500 dark:text-gray-600 text-xs border-t border-gray-100 dark:border-gray-900 bg-white dark:bg-gray-950">
         <p className="mb-2 uppercase tracking-[0.3em] font-light">Rizki Ananda • Banda Aceh • Indonesia</p>
-        <p className="opacity-50">© 2026 Developed with Next.js 15 & Tailwind</p>
+        <p className="opacity-50">© 2026 Developed with Next.js 16 & Tailwind.</p>
       </footer>
     
       {/* --- BACK TO TOP BUTTON --- */}
