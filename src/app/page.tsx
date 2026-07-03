@@ -43,28 +43,28 @@ export default function Home() {
       issuer: "UIN Ar-Raniry Banda Aceh",
       year: "2025",
       description: "Bukti kelulusan akademik dengan fokus pada pendidikan dan teknologi informasi.",
-      link: "/ijazah-s1-rizki.pdf"
+      link: "/docs/ijazah-s1-rizki.pdf"
     },
     {
       title: "Junior Web Developer",
       issuer: "BPVP Banda Aceh / Sertifikasi Kompetensi",
       year: "2023",
       description: "Pelatihan dasar pengembangan web, algoritma, dan struktur data.",
-      link: "/sertifikat-jwd-2023.pdf"
+      link: "/docs/sertifikat-jwd-2023.pdf"
     },
     {
       title: "Pengembangan Web (Node.js & React)",
       issuer: "BPVP Banda Aceh / Sertifikasi Kompetensi",
       year: "2025",
       description: "Pelatihan intensif membangun aplikasi fullstack modern menggunakan ekosistem JavaScript.",
-      link: "/sertifikat-pengembangan-web-2025.pdf"
+      link: "/docs/sertifikat-pengembangan-web-2025.pdf"
     },
     {
       title: "Sertifikat Magang",
       issuer: "Hotel Fhandika Boutique.Inc",
       year: "2025",
       description: "Penghargaan atas kontribusi pengembangan sistem informasi internal hotel selama masa magang.",
-      link: "/sertifikat-magang-fhandika.pdf"
+      link: "/docs/sertifikat-magang-fhandika.pdf"
     }
   ];
 
@@ -126,9 +126,14 @@ export default function Home() {
       {/* --- NAVBAR --- */}
       <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tighter text-blue-600 dark:text-blue-500 hover:text-blue-400 transition-colors cursor-default">
-            RIZKI<span className="text-gray-900 dark:text-white">.DEV</span>
-          </span>
+          <Image 
+            src="/images/logo1.svg" // Path ke file logo Anda
+            alt="Logo Rizki Ananda" // Teks alternatif untuk aksesibilitas
+            width={150} // Lebar dasar
+            height={50} // Tinggi dasar
+            className="h-11 w-auto" // Mengatur tinggi tetap dengan Tailwind
+            priority // Mengoptimalkan pemuatan logo karena di atas lipatan
+          />
           
           <div className="flex items-center gap-4">
             {/* Theme Toggle Button */}
@@ -167,7 +172,7 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center gap-4 ml-4">
-              <a href="/cv-rizki.pdf" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
+              <a href="/docs/cv-rizki.pdf" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
                 <FileText className="w-4 h-4" /> Lihat CV
               </a>
               <a href="mailto:Rizkiananda2207@gmail.com" className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-blue-500 transition shadow-lg shadow-blue-900/20">
@@ -200,7 +205,7 @@ export default function Home() {
             </a>
           ))}
           <div className="flex flex-col gap-4 pt-6 border-t border-gray-200 dark:border-gray-800">
-            <a href="/cv-rizki.pdf" className="text-gray-500 dark:text-gray-400 flex items-center gap-2 text-sm">
+            <a href="/docs/cv-rizki.pdf" className="text-gray-500 dark:text-gray-400 flex items-center gap-2 text-sm">
               <FileText className="w-4 h-4"/> Lihat CV (PDF)
             </a>
             <a href="mailto:Rizkiananda2207@gmail.com" className="text-blue-600 dark:text-blue-500 text-sm font-bold uppercase tracking-widest">
@@ -215,7 +220,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
           <div className="w-48 h-48 rounded-3xl overflow-hidden border-2 border-gray-200 dark:border-gray-800 shadow-2xl flex-shrink-0 transition-transform duration-500 hover:scale-105 relative">
             <Image 
-              src="/profil.jpg" 
+              src="/images/profil.jpg" 
               alt="Rizki Ananda" 
               fill
               className="object-cover bg-gray-100 dark:bg-gray-900"
