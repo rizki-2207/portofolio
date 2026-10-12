@@ -86,7 +86,29 @@ export default function Home() {
       title: "Website Portofolio Pribadi",
       techStack: "Next.js, Tailwind CSS, TypeScript",
       description: "Merancang dan mengembangkan situs web portofolio pribadi yang responsif dengan fitur dark mode. Proyek ini di-deploy menggunakan Vercel dan dioptimalkan kinerjanya menggunakan Vercel Speed Insights.",
-      link: "https://rizkiananda.my.id"
+      link: "https://rizkiananda.my.id",
+      image: "/images/portofolio.jpg"
+    },
+    {
+      title: "Website To Do List",
+      techStack: "Next.js, Tailwind CSS, TypeScript",
+      description: "Menbantu kita mengatur tugas, menentukan proirotas, mengelola waktu dan menyelesaikan kegiatan dengan lebih efektif dan teratur.",
+      link: "https://to-do-list-sooty-one-70.vercel.app/",
+      image: "/images/todolist.jpg"
+    },
+    {
+      title: "Website Pencatat Pengeluaran Harian",
+      techStack: "Next.js, Tailwind CSS, TypeScript",
+      description: "Aplikasi web untuk mencatat uang masuk dan keluar sehari-hari agar keuangan lebih terkontrol.",
+      link: "https://pencatat-pengeluaran-harian.vercel.app/",
+      image: "/images/pengeluaran.jpg"
+    },
+    {
+      title: "Website Kalkulator Split Bill",
+      techStack: "Next.js, Tailwind CSS, TypeScript",
+      description: "Utilitas web yang sangat praktis saat nongkrong atau makan bersama teman untuk menghitung siapa bayar berapa.",
+      link: "https://kalkulator-split-bill-w9pq.vercel.app/",
+      image: "/images/splitbill.jpg"
     }
   ];
 
@@ -255,7 +277,7 @@ export default function Home() {
                 <Mail className="w-4 h-4 text-blue-500" /> Rizkiananda2207@gmail.com
               </a>
               <a href="tel:+6282369392577" className="flex items-center gap-2 hover:text-blue-500 transition">
-                <Phone className="w-4 h-4 text-blue-500" /> 0823 6939 2577
+                <Phone className="w-4 h-4 text-blue-500" /> 089513562852
               </a>
               <a href="https://instagram.com/rizki_0700" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-blue-500 transition">
                 <Instagram className="w-4 h-4 text-blue-500" /> @rizki_0700
@@ -301,7 +323,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PORTOFOLIO / PROJECTS SECTION ---
+      {/* --- PORTOFOLIO / PROJECTS SECTION --- */}
       <section id="portofolio" className="py-24 px-6 border-t border-gray-100 dark:border-gray-900 bg-white dark:bg-gray-950 text-left">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl font-bold mb-12 flex items-center gap-3 text-gray-900 dark:text-white">
@@ -315,27 +337,41 @@ export default function Home() {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col justify-between bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 p-8 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-colors shadow-sm"
+                className="group flex flex-col bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300 shadow-sm overflow-hidden"
               >
-                <div>
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                {/* --- Tambahan: Bagian Gambar Screenshot --- */}
+                <div className="relative w-full h-56 md:h-64 overflow-hidden border-b border-gray-200 dark:border-gray-800">
+                  <Image 
+                    src={project.image}
+                    alt={`Screenshot ${project.title}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                
+                {/* --- Bagian Teks (Dimodifikasi sedikit jaraknya) --- */}
+                <div className="p-8 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <ExternalLink className="w-5 h-5 flex-shrink-0 ml-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                    </div>
+                    <p className="text-xs font-mono text-blue-600 dark:text-blue-500 mb-4 uppercase tracking-wider">
+                      {project.techStack}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-0">
+                      {project.description}
+                    </p>
                   </div>
-                  <p className="text-xs font-mono text-blue-600 dark:text-blue-500 mb-4 uppercase tracking-wider">
-                    {project.techStack}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
                 </div>
               </a>
             ))}
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* --- EXPERIENCE SECTION --- */}
       <section id="experience" className="py-24 px-6 border-t border-gray-100 dark:border-gray-900 bg-gray-50 dark:bg-gray-950">
